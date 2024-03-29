@@ -37,7 +37,10 @@ function ListScreen({ onNewItem }) {
           ListFooterComponent={<View style={{height: 20}}/>}
         ></FlatList>
       </View>
+      <View style={styles.button}>
+        
       <IconButton onPress={addNewItemHandler} />
+      </View>
     </View>
   );
 }
@@ -50,5 +53,11 @@ const styles = StyleSheet.create({
     },
     rootContainer:{
         flex: 1,
+    },
+    button:{
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        margin: 4,
+        padding:4
     }
 });
