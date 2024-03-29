@@ -66,7 +66,7 @@ function RegisterScreen({ onNewPacient }) {
         </Pressable>
 
         <UserInputField
-          maxLength={100}
+          maxLength={150}
           onChangeText={changePacientHandler}
           enteredText={enteredPacient}
           autoCapitalize={"words"}
@@ -79,7 +79,7 @@ function RegisterScreen({ onNewPacient }) {
           Paciente
         </UserInputField>
         <UserInputField
-          maxLength={100}
+          maxLength={150}
           onChangeText={changeDoctorHandler}
           enteredText={enteredDoctor}
           autoCapitalize={"words"}
@@ -92,12 +92,12 @@ function RegisterScreen({ onNewPacient }) {
           Doctor
         </UserInputField>
         <UserInputField
-          maxLength={100}
+          maxLength={10}
           onChangeText={changePacientHandler}
           enteredText={enteredPacient}
           autoCapitalize={"none"}
           autoCorrect={false}
-          placeHolder={"Nombre del pasiente"}
+          placeHolder={"Teléfono del doctor"}
           secureTextEntry={false}
           textContentType={"telephoneNumber"}
           keyboardType={"number-pad"}
@@ -105,7 +105,7 @@ function RegisterScreen({ onNewPacient }) {
           Teléfono
         </UserInputField>
         <UserInputField
-          maxLength={100}
+          maxLength={1024}
           onChangeText={changeSymHandler}
           enteredText={enteredSym}
           autoCapitalize={"sentences"}
