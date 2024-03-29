@@ -1,12 +1,18 @@
-import { useState, useEffect } from "react";
-import { StyleSheet, View, Image, Pressable,Text, Platform } from "react-native";
+import { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Pressable,
+  Platform,
+  Alert,
+} from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import PrimaryButton from "../components/ui/buttons/PrimaryButton";
 import Title from "../components/ui/Title";
 import UserInputField from "../components/ui/UserInputField";
 import Register from "../models/register";
-import { RegisterData } from "../dummyinfo/dummy";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
@@ -17,7 +23,6 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
   const [enteredDoctor, setEnteredDoctor] = useState();
   const [enteredPhone, setEnteredPhone] = useState();
   const [enteredSym, setEnteredSym] = useState();
-    
 
   const enteredPhoto = imageTaken;
   let newRegister;
@@ -53,92 +58,72 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
   function cameraHandler() {
     onNewCamera();
   }
-  function registerHandler(){
-
-  }
   const onSubmit = async () => {
     if (
-      enteredPacient !== undefined ||
-      enteredDoctor !== undefined ||
-      enteredSym !== undefined ||
-      enteredPhone !== undefined ||
-      enteredPhoto !== undefined 
+      enteredPacient === undefined ||
+      enteredDoctor === undefined ||
+      enteredSym === undefined ||
+      enteredPhone === undefined ||
+      enteredPhoto === undefined
     ) {
+      Alert.alert(
+        "Registro no agregado",
+        "El registro tuvo datos inválidos, por favor intentarlo de nuevo",
+        [{ text: "Aceptar" }]
+      );
+    } else {
       if (
-        enteredPacient.length !== 0 ||
-        enteredDoctor.length !== 0 ||
-        enteredSym.length !== 0 ||
-        enteredPhone.length !== 0
+        enteredPacient.length !== 0 &&
+        enteredDoctor.length !== 0 &&
+        enteredSym.length !== 0 &&
+        enteredPhone.length !== 0 &&
+        enteredPhoto.length !== 0
       ) {
-        
         newRegister = new Register(
-            Math.floor(Math.random() * 10000),
-            enteredDate,
-            enteredPacient,
-            enteredDoctor,
-            enteredPhone,
-            enteredSym,
-            enteredPhoto
-          )
+          Math.floor(Math.random() * 10000),
+          enteredDate,
+          enteredPacient,
+          enteredDoctor,
+          enteredPhone,
+          enteredSym,
+          enteredPhoto
+        );
         try {
           let existingRegister = await getRegister();
-          if(existingRegister === null){
+          if (existingRegister === null) {
             const updatedRegister = [newRegister];
             await AsyncStorage.setItem(
-                "my-key",
-                JSON.stringify(updatedRegister)
-              );
-          }else{
+              "my-key",
+              JSON.stringify(updatedRegister)
+            );
+          } else {
             const updatedRegister = [...existingRegister, newRegister];
             await AsyncStorage.setItem(
-                "my-key",
-                JSON.stringify(updatedRegister)
-              );
+              "my-key",
+              JSON.stringify(updatedRegister)
+            );
           }
-          
-        } catch (error) {console.log(error)}
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        Alert.alert(
+          "Registro no agregado",
+          "El registro tuvo datos inválidos, por favor intentarlo de nuevo",
+          [{ text: "Aceptar" }]
+        );
       }
     }
-    registerHandler();
     onNewPacient();
   };
   const getRegister = async () => {
     try {
-        const jsonValue = await AsyncStorage.getItem('my-key');
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
-      } catch (e) {
-        console.log(e);
-      }
-  };
-  function newPacientHandler() {
-    if (
-      enteredPacient !== undefined ||
-      enteredDoctor !== undefined ||
-      enteredSym !== undefined ||
-      enteredPhone !== undefined
-    ) {
-      if (
-        enteredPacient.length !== 0 ||
-        enteredDoctor.length !== 0 ||
-        enteredSym.length !== 0 ||
-        enteredPhone.length !== 0
-      ) {
-        newRegister = RegisterData.push(
-          new Register(
-            Math.floor(Math.random() * 10000),
-            enteredDate,
-            enteredPacient,
-            enteredDoctor,
-            enteredPhone,
-            enteredSym,
-            enteredPhoto
-          )
-        );
-        onSubmit;
-        onNewPacient();
-      }
+      const jsonValue = await AsyncStorage.getItem("my-key");
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
   return (
     <View style={styles.container}>
       <Title>Registro</Title>
@@ -223,8 +208,10 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
       </View>
 
       <PrimaryButton onPress={cameraHandler}>Capturar receta</PrimaryButton>
-      <View style={styles.imageContainer}><Image source={{ uri: enteredPhoto }} style={styles.image} />
-      </View><PrimaryButton onPress={onSubmit}>Guardar</PrimaryButton>
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: enteredPhoto }} style={styles.image} />
+      </View>
+      <PrimaryButton onPress={onSubmit}>Guardar</PrimaryButton>
     </View>
   );
 }
@@ -236,9 +223,9 @@ const styles = StyleSheet.create({
     margin: 12,
     marginTop: 32,
   },
-  imageContainer:{
-    justifyContent: 'center',
-    alignItems: 'center',
+  imageContainer: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   image: {
     height: 200,

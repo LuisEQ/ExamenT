@@ -4,7 +4,6 @@ import IconButton from "../components/ui/buttons/IconButton";
 import PacientItem from "../components/pacientInfo/PacientItem";
 import Title from "../components/ui/Title";
 import SearchBar from "../components/ui/SearchBar";
-import { RegisterData } from "../dummyinfo/dummy";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
