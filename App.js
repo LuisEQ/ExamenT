@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import AuthScreen from "./screens/AuthScreen";
 
 export default function App() {
+  const [authValid, setAuthValid] = useState(false);
+
+  function authValidHandler() {
+    setAuthValid(true);
+  }
+
+  let screen = <AuthScreen onValid={authValidHandler} />;
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
+      <SafeAreaView>{screen}</SafeAreaView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    margin: 12,
+    marginTop: 24,
   },
 });
