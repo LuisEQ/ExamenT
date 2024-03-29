@@ -24,6 +24,7 @@ export default PacientItem;
 
 const styles = StyleSheet.create({
   rootContainer: {
+    flex:1,
     flexDirection: "row",
     margin: 12,
     borderBottomWidth: 2,

@@ -1,4 +1,4 @@
-class Register {
+class Register{
   constructor(id, date, pacient, doctor, phone, symptoms, image) {
     this.id = id;
     this.date = date;

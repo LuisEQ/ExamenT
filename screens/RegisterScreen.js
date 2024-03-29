@@ -51,6 +51,7 @@ function RegisterScreen({ onNewPacient }) {
 
         <Pressable onPress={toggleDatepicker}>
           <UserInputField
+            keyboardType={'default'}
             maxLength={100}
             onChangeText={changeDateHandler}
             enteredText={enteredDate}
@@ -112,7 +113,7 @@ function RegisterScreen({ onNewPacient }) {
           placeHolder={"Describa el malestar presentado"}
           secureTextEntry={false}
           textContentType={"name"}
-          keyboardType={"none"}
+          keyboardType={"default"}
         >
           Malestar/Síntomas
         </UserInputField>

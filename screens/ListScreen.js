@@ -1,27 +1,41 @@
-import { StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import IconButton from "../components/ui/buttons/IconButton";
 import PacientItem from "../components/pacientInfo/PacientItem";
 import Title from "../components/ui/Title";
 import SearchBar from "../components/ui/SearchBar";
+import { RegisterData } from "../dummyinfo/dummy";
 
 function ListScreen({ onNewItem }) {
-    function searchBarHandler(){
-
-    }
+  const displayedPacients = RegisterData.sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+  function searchBarHandler() {}
   function addNewItemHandler() {
     {
       onNewItem();
     }
-    
+  }
+  function renderPacient(itemData) {
+    return (
+      <PacientItem
+        pacient={itemData.item.pacient}
+        sym={itemData.item.symtoms}
+        doctor={itemData.item.doctor}
+        phone={itemData.item.phone}
+      />
+    );
   }
   return (
-    <View>
+    <View >
       <Title>Registro </Title>
-      <SearchBar onChanged={searchBarHandler}/>
-      <View>
-        <PacientItem />
-        <PacientItem />
-        <PacientItem />
+      <SearchBar onChanged={searchBarHandler} />
+      <View style={styles.flatlistContainer}>
+        <FlatList
+          data={displayedPacients}
+          keyExtractor={(pacient) => pacient.id}
+          renderItem={renderPacient} 
+          ListFooterComponent={<View style={{height: 20}}/>}
+        />
       </View>
       <IconButton onPress={addNewItemHandler} />
     </View>
@@ -30,4 +44,7 @@ function ListScreen({ onNewItem }) {
 
 export default ListScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    flatlistContainer:{
+    }
+});
