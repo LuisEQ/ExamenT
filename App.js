@@ -30,10 +30,10 @@ export default function App() {
     }
   }
   return (
-    <View style={styles.container}>
+    <>
       <StatusBar style="auto" />
-      <SafeAreaView>{screen}</SafeAreaView>
-    </View>
+      <SafeAreaView style={styles.container}>{screen}</SafeAreaView>
+    </>
   );
 }
 

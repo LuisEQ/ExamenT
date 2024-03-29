@@ -26,7 +26,7 @@ function ListScreen({ onNewItem }) {
     );
   }
   return (
-    <View >
+    <View style={styles.rootContainer}>
       <Title>Registro </Title>
       <SearchBar onChanged={searchBarHandler} />
       <View style={styles.flatlistContainer}>
@@ -35,7 +35,7 @@ function ListScreen({ onNewItem }) {
           keyExtractor={(pacient) => pacient.id}
           renderItem={renderPacient} 
           ListFooterComponent={<View style={{height: 20}}/>}
-        />
+        ></FlatList>
       </View>
       <IconButton onPress={addNewItemHandler} />
     </View>
@@ -46,5 +46,9 @@ export default ListScreen;
 
 const styles = StyleSheet.create({
     flatlistContainer:{
+        flex:1,
+    },
+    rootContainer:{
+        flex: 1,
     }
 });
