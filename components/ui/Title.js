@@ -13,7 +13,8 @@ export default Title;
 
 const styles = StyleSheet.create({
     titleContainer:{
-        margin: 12,
+        marginVertical: 12,
+        marginHorizontal: 4,
     },
     
     title:{

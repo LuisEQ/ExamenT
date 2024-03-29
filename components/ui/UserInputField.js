@@ -13,6 +13,7 @@ function UserInputField({
   secureTextEntry,
   textContentType,
   keyboardType,
+  editable,
   
 }) {
   return (
@@ -28,6 +29,7 @@ function UserInputField({
         value={enteredText}
         placeholder={placeHolder}
         secureTextEntry={secureTextEntry}
+        editable={editable}
       />
     </View>
   );
