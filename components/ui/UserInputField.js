@@ -10,15 +10,20 @@ function UserInputField({
   autoCapitalize,
   autoCorrect,
   placeHolder,
-  secureTextEntry
+  secureTextEntry,
+  textContentType,
+  keyboardType,
+  
 }) {
   return (
     <View style={styles.rootContainer}>
       <Text style={styles.title}>{children}</Text>
       <TextInput
-        maxLength={100}
-        autoCapitalize={"none"}
-        autoCorrect={false}
+        textContentType={textContentType}
+        keyboardType={keyboardType}
+        maxLength={maxLength}
+        autoCapitalize={autoCapitalize}
+        autoCorrect={autoCorrect}
         onChangeText={onChangeText}
         value={enteredText}
         placeholder={placeHolder}

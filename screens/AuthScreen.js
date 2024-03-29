@@ -7,40 +7,59 @@ import UserInputField from "../components/ui/UserInputField";
 import Title from "../components/ui/Title";
 
 function AuthScreen({ onValid }) {
-    const [emailEntered,setEmailEntered] = useState('');
-    const [passwordEntered,setPasswordEntered] = useState('');
-    function onValidAuth(){
-        {onValid()}
+  const [emailEntered, setEmailEntered] = useState("");
+  const [passwordEntered, setPasswordEntered] = useState("");
+
+  function validateEmail(email) {
+    let re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
+  function onValidAuth() {
+    if (validateEmail(emailEntered)) {
+      {
+        onValid();
+      }
+      console.log("Valid email");
+    } else {
+      console.log("Invalid Email");
     }
-    function changeEmailHandler(enteredEmail){
-        setEmailEntered(enteredEmail);
-    }
-    function changePasswordHandler(enteredPassword){
-        setPasswordEntered(enteredPassword);
-    }
+  }
+  function changeEmailHandler(enteredEmail) {
+    setEmailEntered(enteredEmail);
+  }
+  function changePasswordHandler(enteredPassword) {
+    setPasswordEntered(enteredPassword);
+  }
   return (
     <View>
-        <View style={styles.titleContainer}>
-            <Title>Inicio de Sesión</Title>
-        </View>
+      <View style={styles.titleContainer}>
+        <Title>Inicio de Sesión</Title>
+      </View>
       <UserInputField
-      maxLength={100}
-      onChangeText={changeEmailHandler}
-      enteredText={emailEntered}
-      autoCapitalize={'none'}
-      autoCorrect={'none'}
-      placeHolder={'Ingresa tu email'}
-      secureTextEntry={false}
-       >Email</UserInputField>
+        maxLength={100}
+        onChangeText={changeEmailHandler}
+        enteredText={emailEntered}
+        autoCapitalize={"none"}
+        autoCorrect={false}
+        placeHolder={"Ingresa tu email"}
+        secureTextEntry={false}
+        textContentType={"emailAddress"}
+        keyboardType={"email-address"}
+      >
+        Email
+      </UserInputField>
       <UserInputField
-      maxLength={100}
-      onChangeText={changePasswordHandler}
-      enteredText={passwordEntered}
-      autoCapitalize={'none'}
-      autoCorrect={'none'}
-      placeHolder={'Ingresa tu contraseña'}
-      secureTextEntry={true}
-      >Contraseña</UserInputField>
+        maxLength={100}
+        onChangeText={changePasswordHandler}
+        enteredText={passwordEntered}
+        autoCapitalize={"none"}
+        autoCorrect={false}
+        placeHolder={"Ingresa tu contraseña"}
+        secureTextEntry={true}
+      >
+        Contraseña
+      </UserInputField>
       <PrimaryButton onPress={onValidAuth}>Iniciar Sesión</PrimaryButton>
     </View>
   );
@@ -49,7 +68,7 @@ function AuthScreen({ onValid }) {
 export default AuthScreen;
 
 const styles = StyleSheet.create({
-    titleContainer:{
-        marginTop: 12,
-    },
+  titleContainer: {
+    marginTop: 12,
+  },
 });
