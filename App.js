@@ -29,8 +29,6 @@ export default function App() {
     setNewCamera(false);
   }
   const imageTakenHandler = (data) => {
-    console.log(data);
-    console.log('enters')
     setNewPhoto(data);
   }
 

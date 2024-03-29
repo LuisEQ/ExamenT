@@ -2,7 +2,6 @@ import { StyleSheet, View, Alert } from "react-native";
 import { useState } from "react";
 
 import PrimaryButton from "../components/ui/buttons/PrimaryButton";
-import IconButton from "../components/ui/buttons/IconButton";
 import UserInputField from "../components/ui/UserInputField";
 import Title from "../components/ui/Title";
 

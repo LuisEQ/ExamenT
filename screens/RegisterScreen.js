@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import {
   StyleSheet,
   View,
   Image,
   Pressable,
   Platform,
-  Text,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -25,9 +24,6 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
   const [enteredSym, setEnteredSym] = useState();
   
   const enteredPhoto = imageTaken;
-  if(enteredPhoto === null || enteredPhoto === undefined){
-    console.log('No hay foto')
-  }
   const toggleDatepicker = () => {
     setShowPicker(!showPicker);
   };

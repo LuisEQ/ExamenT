@@ -20,7 +20,6 @@ export default function CameraScreen({ onNewCamera, imageTaken }) {
     if (cameraRef) {
       try {
         const data = await cameraRef.current.takePictureAsync();
-        console.log(data);
         setImage(data.uri);
       } catch (e) {
         console.log(e);
@@ -28,11 +27,7 @@ export default function CameraScreen({ onNewCamera, imageTaken }) {
     }
   };
   if (!hasCameraPermission) {
-    return Alert.alert(
-      "No hay acceso a la cámara",
-      "Se necesitan permisos de cámara para poder usarla.",
-      [{ text: "Aceptar" }]
-    );
+    
   }
   function savePhotoHandler(){
     imageTaken( image);
