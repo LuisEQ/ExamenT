@@ -6,6 +6,9 @@ import UserInputField from "../components/ui/UserInputField";
 import Title from "../components/ui/Title";
 
 function AuthScreen({ onValid }) {
+    function onValidAuth(){
+        {onValid()}
+    }
   return (
     <View>
         <View style={styles.titleContainer}>
@@ -13,7 +16,7 @@ function AuthScreen({ onValid }) {
         </View>
       <UserInputField>Email</UserInputField>
       <UserInputField>Contraseña</UserInputField>
-      <PrimaryButton>Iniciar Sesión</PrimaryButton>
+      <PrimaryButton onPress={onValidAuth}>Iniciar Sesión</PrimaryButton>
       <IconButton />
     </View>
   );

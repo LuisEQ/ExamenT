@@ -1,7 +1,13 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
-function ListScreen() {}
-
+function ListScreen() {
+    return (
+        <View>
+            <Text> HOLA MUNDO</Text>
+        </View>
+    )
+}
+    
 export default ListScreen;
 
 const styles = StyleSheet.create({});
