@@ -1,11 +1,5 @@
-import { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Image,
-  Pressable,
-  Platform,
-} from "react-native";
+import { useState, useEffect } from "react";
+import { StyleSheet, View, Image, Pressable,Text, Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import PrimaryButton from "../components/ui/buttons/PrimaryButton";
@@ -13,6 +7,7 @@ import Title from "../components/ui/Title";
 import UserInputField from "../components/ui/UserInputField";
 import Register from "../models/register";
 import { RegisterData } from "../dummyinfo/dummy";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
   const [date, setDate] = useState(new Date());
@@ -22,8 +17,12 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
   const [enteredDoctor, setEnteredDoctor] = useState();
   const [enteredPhone, setEnteredPhone] = useState();
   const [enteredSym, setEnteredSym] = useState();
-  
+    
+  let aux;
+
   const enteredPhoto = imageTaken;
+  let newRegister;
+
   const toggleDatepicker = () => {
     setShowPicker(!showPicker);
   };
@@ -56,12 +55,13 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
     onNewCamera();
   }
 
-  function newPacientHandler() {
+  const onSubmit = async () => {
     if (
       enteredPacient !== undefined ||
       enteredDoctor !== undefined ||
       enteredSym !== undefined ||
-      enteredPhone !== undefined
+      enteredPhone !== undefined ||
+      enteredPhoto !== undefined 
     ) {
       if (
         enteredPacient.length !== 0 ||
@@ -80,6 +80,64 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
             enteredPhoto
           )
         );
+        newRegister = RegisterData.sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+          });
+        try {
+          let existingRegister = await getRegister();
+          if(existingRegister === null){
+            const updatedRegister = [newRegister];
+            await AsyncStorage.setItem(
+                "my-key",
+                JSON.stringify(updatedRegister)
+              );
+          }else{
+            const updatedRegister = [...existingRegister, newRegister];
+            await AsyncStorage.setItem(
+                "my-key",
+                JSON.stringify(updatedRegister)
+              );
+          }
+          
+        } catch (error) {console.log(error)}
+      }
+    }
+
+    onNewPacient();
+  };
+  const getRegister = async () => {
+    try {
+        const jsonValue = await AsyncStorage.getItem('my-key');
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+      } catch (e) {
+        console.log(e);
+      }
+  };
+  function newPacientHandler() {
+    if (
+      enteredPacient !== undefined ||
+      enteredDoctor !== undefined ||
+      enteredSym !== undefined ||
+      enteredPhone !== undefined
+    ) {
+      if (
+        enteredPacient.length !== 0 ||
+        enteredDoctor.length !== 0 ||
+        enteredSym.length !== 0 ||
+        enteredPhone.length !== 0
+      ) {
+        newRegister = RegisterData.push(
+          new Register(
+            Math.floor(Math.random() * 10000),
+            enteredDate,
+            enteredPacient,
+            enteredDoctor,
+            enteredPhone,
+            enteredSym,
+            enteredPhoto
+          )
+        );
+        onSubmit;
         onNewPacient();
       }
     }
@@ -168,8 +226,8 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
       </View>
 
       <PrimaryButton onPress={cameraHandler}>Capturar receta</PrimaryButton>
-            <Image source={{uri: enteredPhoto}} style={styles.image}/>
-      <PrimaryButton onPress={newPacientHandler}>Guardar</PrimaryButton>
+      <View style={styles.imageContainer}><Image source={{ uri: enteredPhoto }} style={styles.image} />
+      </View><PrimaryButton onPress={onSubmit}>Guardar</PrimaryButton>
     </View>
   );
 }
@@ -181,9 +239,12 @@ const styles = StyleSheet.create({
     margin: 12,
     marginTop: 32,
   },
-  image:{
-    
+  imageContainer:{
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
     height: 200,
     width: 200,
-  }
+  },
 });
