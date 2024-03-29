@@ -13,14 +13,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 function ListScreen({ onNewItem }) {
   const [searchBarText, setSearchBarText] = useState("");
   const [flatlistArray, setFlatlistArray] = useState();
-  let displayedPacients;
-  useEffect(()=>{
-    getRegister();
-  },[])
-    displayedPacients = flatlistArray?.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-      });
   
+  let displayedPacients = flatlistArray?.sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+  useEffect(()=>{
+     getRegister();
+  },[])
+    
+ 
   const getRegister = async () => {
     try {
         const jsonValue = await AsyncStorage.getItem('my-key');
@@ -32,13 +33,20 @@ function ListScreen({ onNewItem }) {
   };
   function searchBarHandler(text) {
     setSearchBarText(text);
-    displayedPacients = flatlistArray.filter((a) => {
-      return (
-        a.doctor.toUpperCase().includes(text.toUpperCase()) ||
-        a.pacient.toUpperCase().includes(text.toUpperCase()) ||
-        a.symptoms.toUpperCase().includes(text.toUpperCase())
-      );
-    });
+    if(text.length !== 0){
+        displayedPacients = flatlistArray?.filter((a) => {
+            return (
+              a.doctor.toUpperCase().includes(searchBarText.toUpperCase()) ||
+              a.pacient.toUpperCase().includes(searchBarText.toUpperCase()) ||
+              a.symptoms.toUpperCase().includes(searchBarText.toUpperCase())
+            );
+          });
+    }else{
+        displayedPacients = flatlistArray?.sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+          });
+    }
+    
   }
   function addNewItemHandler() {
     {

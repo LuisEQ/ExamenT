@@ -23,6 +23,7 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
   const [enteredDoctor, setEnteredDoctor] = useState();
   const [enteredPhone, setEnteredPhone] = useState();
   const [enteredSym, setEnteredSym] = useState();
+  const [disableButton, setDisableButton] = useState(true);
 
   const enteredPhoto = imageTaken;
   let newRegister;
@@ -42,18 +43,42 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
       toggleDatepicker();
     }
   };
+  function disableButtonHandler() {
+    if (
+      enteredPacient === undefined ||
+      enteredDoctor === undefined ||
+      enteredSym === undefined ||
+      enteredPhone === undefined ||
+      enteredPhoto === undefined
+    ) {
+      
+    }else{
+        if (
+            enteredPacient.length !== 0 &&
+            enteredDoctor.length !== 0 &&
+            enteredPhone.length === 10 &&
+            enteredSym.length !== 0
+          ) {
+            setDisableButton(false);
+          }
+    }
+  }
   function changeDateHandler(enteredData) {}
   function changePacientHandler(enteredData) {
     setEnteredPacient(enteredData);
+    disableButtonHandler();
   }
   function changeDoctorHandler(enteredData) {
     setEnteredDoctor(enteredData);
+    disableButtonHandler();
   }
   function changePhoneHandler(enteredData) {
     setEnteredPhone(enteredData);
+    disableButtonHandler();
   }
   function changeSymHandler(enteredData) {
     setEnteredSym(enteredData);
+    disableButtonHandler();
   }
   function cameraHandler() {
     onNewCamera();
@@ -211,7 +236,9 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
       <View style={styles.imageContainer}>
         <Image source={{ uri: enteredPhoto }} style={styles.image} />
       </View>
-      <PrimaryButton onPress={onSubmit}>Guardar</PrimaryButton>
+      <PrimaryButton onPress={onSubmit} disable={disableButton}>
+        Guardar
+      </PrimaryButton>
     </View>
   );
 }
