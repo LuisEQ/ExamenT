@@ -1,6 +1,8 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
 
 
+import Colors from "../../constants/Colors";
+
 function UserInputField({onChangeText, enteredText, children}){
     
     return(
@@ -18,10 +20,12 @@ const styles = StyleSheet.create({
         margin: 12,
         borderBottomColor: '#ccc',
         borderBottomWidth: 2,
+        
     },
     title:{
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: 'bold',
+        color: Colors.primary500,
 
     }
 })
