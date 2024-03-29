@@ -1,20 +1,39 @@
 import { FlatList, StyleSheet, View } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IconButton from "../components/ui/buttons/IconButton";
 import PacientItem from "../components/pacientInfo/PacientItem";
 import Title from "../components/ui/Title";
 import SearchBar from "../components/ui/SearchBar";
 import { RegisterData } from "../dummyinfo/dummy";
 
-let displayedPacients = RegisterData.sort((a, b) => {
-  return new Date(b.date) - new Date(a.date);
-});
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
+
+
 function ListScreen({ onNewItem }) {
   const [searchBarText, setSearchBarText] = useState("");
-
+  const [flatlistArray, setFlatlistArray] = useState();
+  let displayedPacients;
+  useEffect(()=>{
+    getRegister();
+  },[])
+    displayedPacients = flatlistArray?.sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+  
+  const getRegister = async () => {
+    try {
+        const jsonValue = await AsyncStorage.getItem('my-key');
+        setFlatlistArray(jsonValue != null ? JSON.parse(jsonValue) : null);
+        return flatlistArray;
+      } catch (e) {
+        console.log(e);
+      }
+  };
   function searchBarHandler(text) {
     setSearchBarText(text);
-    displayedPacients = RegisterData.filter((a) => {
+    displayedPacients = flatlistArray.filter((a) => {
       return (
         a.doctor.toUpperCase().includes(text.toUpperCase()) ||
         a.pacient.toUpperCase().includes(text.toUpperCase()) ||

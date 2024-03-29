@@ -18,7 +18,6 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
   const [enteredPhone, setEnteredPhone] = useState();
   const [enteredSym, setEnteredSym] = useState();
     
-  let aux;
 
   const enteredPhoto = imageTaken;
   let newRegister;
@@ -54,7 +53,9 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
   function cameraHandler() {
     onNewCamera();
   }
+  function registerHandler(){
 
+  }
   const onSubmit = async () => {
     if (
       enteredPacient !== undefined ||
@@ -69,8 +70,8 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
         enteredSym.length !== 0 ||
         enteredPhone.length !== 0
       ) {
-        RegisterData.push(
-          new Register(
+        
+        newRegister = new Register(
             Math.floor(Math.random() * 10000),
             enteredDate,
             enteredPacient,
@@ -79,10 +80,6 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
             enteredSym,
             enteredPhoto
           )
-        );
-        newRegister = RegisterData.sort((a, b) => {
-            return new Date(b.date) - new Date(a.date);
-          });
         try {
           let existingRegister = await getRegister();
           if(existingRegister === null){
@@ -102,7 +99,7 @@ function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
         } catch (error) {console.log(error)}
       }
     }
-
+    registerHandler();
     onNewPacient();
   };
   const getRegister = async () => {

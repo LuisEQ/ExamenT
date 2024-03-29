@@ -23,7 +23,7 @@ function AuthScreen({ onValid }) {
     if (validateEmail(emailEntered)) {
       {
         if (emailEntered === "jhon@mail.com" && passwordEntered === "77@1$") {
-          console.log("Valid email and password");
+          onValid();
         } else {
           Alert.alert(
             "Credenciales inválidas",
@@ -32,7 +32,6 @@ function AuthScreen({ onValid }) {
           );
         }
 
-        onValid();
       }
     } else {
       console.log("Invalid Email");
