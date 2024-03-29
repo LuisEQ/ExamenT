@@ -8,8 +8,6 @@ import SearchBar from "../components/ui/SearchBar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-
-
 function ListScreen({ onNewItem }) {
   const [searchBarText, setSearchBarText] = useState("");
   const [flatlistArray, setFlatlistArray] = useState();
@@ -34,7 +32,7 @@ function ListScreen({ onNewItem }) {
   function searchBarHandler(text) {
     setSearchBarText(text);
     if(text.length !== 0){
-        displayedPacients = flatlistArray?.filter((a) => {
+        displayedPacients = flatlistArray.filter((a) => {
             return (
               a.doctor.toUpperCase().includes(searchBarText.toUpperCase()) ||
               a.pacient.toUpperCase().includes(searchBarText.toUpperCase()) ||
@@ -54,15 +52,32 @@ function ListScreen({ onNewItem }) {
     }
   }
   function renderPacient(itemData) {
-    return (
-      <PacientItem
+    
+        if(searchBarText.length !== 0 && (itemData.item.doctor.toUpperCase().includes(searchBarText.toUpperCase()) ||
+        itemData.item.pacient.toUpperCase().includes(searchBarText.toUpperCase()) ||
+        itemData.item.symptoms.toUpperCase().includes(searchBarText.toUpperCase()))){
+            return(
+                <PacientItem
         pacient={itemData.item.pacient}
         sym={itemData.item.symptoms}
         doctor={itemData.item.doctor}
         phone={itemData.item.phone}
         image={itemData.item.image}
       />
-    );
+            )
+        }else if(searchBarText.length === 0){
+            return(
+                <PacientItem
+        pacient={itemData.item.pacient}
+        sym={itemData.item.symptoms}
+        doctor={itemData.item.doctor}
+        phone={itemData.item.phone}
+        image={itemData.item.image}
+      />
+            )
+            
+        }
+      
   }
   return (
     <View style={styles.rootContainer}>
