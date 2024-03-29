@@ -14,9 +14,6 @@ function ListScreen({ onNewItem }) {
 
   function searchBarHandler(text) {
     setSearchBarText(text);
-    if(text === null){
-        console.log("It's null")
-    }
     displayedPacients = RegisterData.filter((a) => {
       return (
         a.doctor.toUpperCase().includes(text.toUpperCase()) ||

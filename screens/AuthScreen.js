@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View,Alert } from "react-native";
 import { useState } from "react";
 
 import PrimaryButton from "../components/ui/buttons/PrimaryButton";
@@ -10,6 +10,10 @@ function AuthScreen({ onValid }) {
   const [emailEntered, setEmailEntered] = useState("");
   const [passwordEntered, setPasswordEntered] = useState("");
 
+  function resetCredentials(){
+    setEmailEntered('');
+    setPasswordEntered('');
+  }
   function validateEmail(email) {
     let re = /\S+@\S+\.\S+/;
     return re.test(email);
@@ -18,7 +22,16 @@ function AuthScreen({ onValid }) {
   function onValidAuth() {
     if (validateEmail(emailEntered)) {
       {
-        console.log("Valid email");
+        if(emailEntered === 'jhon@mail.com' && passwordEntered === '77@1$'){
+            console.log("Valid email and password");
+
+        }else{
+            Alert.alert(
+                "Credenciales inválidas",
+                "El correo o la contraseña está incorrecto, favor de intentarlo de nuevo",
+                [{ text: "Aceptar", onPress: resetCredentials }]
+              );
+        }
         onValid();
       }
     } else {
