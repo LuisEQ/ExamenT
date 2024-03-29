@@ -1,15 +1,24 @@
 import { FlatList, StyleSheet, View } from "react-native";
+import { useState } from "react";
 import IconButton from "../components/ui/buttons/IconButton";
 import PacientItem from "../components/pacientInfo/PacientItem";
 import Title from "../components/ui/Title";
 import SearchBar from "../components/ui/SearchBar";
 import { RegisterData } from "../dummyinfo/dummy";
 
-function ListScreen({ onNewItem }) {
-  const displayedPacients = RegisterData.sort((a, b) => {
+let displayedPacients = RegisterData.sort((a, b) => {
     return new Date(b.date) - new Date(a.date);
   });
-  function searchBarHandler() {}
+function ListScreen({ onNewItem }) {
+    
+  const [searchBarText, setSearchBarText] = useState("");
+  
+  function searchBarHandler(text) {
+    setSearchBarText(text);
+    displayedPacients = RegisterData.filter((a) =>{
+        return (a.doctor.toUpperCase().includes(text.toUpperCase()) )
+    })
+  }
   function addNewItemHandler() {
     {
       onNewItem();
@@ -28,7 +37,7 @@ function ListScreen({ onNewItem }) {
   return (
     <View style={styles.rootContainer}>
       <Title>Registro </Title>
-      <SearchBar onChanged={searchBarHandler} />
+      <SearchBar searchBarText={searchBarText} onChanged={searchBarHandler} />
       <View style={styles.flatlistContainer}>
         <FlatList
           data={displayedPacients}

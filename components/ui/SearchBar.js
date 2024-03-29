@@ -7,7 +7,7 @@ function SearchBar({onChanged}) {
 
   function searchBarHandler(text) {
     setSearchBarText(text);
-    onChanged();
+    onChanged(searchBarText);
   }
   return (
     <View style={styles.searchSection}>
