@@ -1,9 +1,14 @@
 import { StyleSheet, View, Text } from "react-native";
+import IconButton from "../components/ui/buttons/IconButton";
 
-function ListScreen() {
+function ListScreen({onNewItem}) {
+    function addNewItemHandler(){
+        {onNewItem()}
+    }
     return (
         <View>
-            <Text> HOLA MUNDO</Text>
+            <Text> ListScreen</Text>
+            <IconButton onPress={addNewItemHandler}/>
         </View>
     )
 }
