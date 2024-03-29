@@ -7,17 +7,23 @@ import SearchBar from "../components/ui/SearchBar";
 import { RegisterData } from "../dummyinfo/dummy";
 
 let displayedPacients = RegisterData.sort((a, b) => {
-    return new Date(b.date) - new Date(a.date);
-  });
+  return new Date(b.date) - new Date(a.date);
+});
 function ListScreen({ onNewItem }) {
-    
   const [searchBarText, setSearchBarText] = useState("");
-  
+
   function searchBarHandler(text) {
     setSearchBarText(text);
-    displayedPacients = RegisterData.filter((a) =>{
-        return (a.doctor.toUpperCase().includes(text.toUpperCase()) )
-    })
+    if(text === null){
+        console.log("It's null")
+    }
+    displayedPacients = RegisterData.filter((a) => {
+      return (
+        a.doctor.toUpperCase().includes(text.toUpperCase()) ||
+        a.pacient.toUpperCase().includes(text.toUpperCase()) ||
+        a.symptoms.toUpperCase().includes(text.toUpperCase())
+      );
+    });
   }
   function addNewItemHandler() {
     {
@@ -42,13 +48,12 @@ function ListScreen({ onNewItem }) {
         <FlatList
           data={displayedPacients}
           keyExtractor={(pacient) => pacient.id}
-          renderItem={renderPacient} 
-          ListFooterComponent={<View style={{height: 20}}/>}
+          renderItem={renderPacient}
+          ListFooterComponent={<View style={{ height: 20 }} />}
         ></FlatList>
       </View>
       <View style={styles.button}>
-        
-      <IconButton onPress={addNewItemHandler} />
+        <IconButton onPress={addNewItemHandler} />
       </View>
     </View>
   );
@@ -57,16 +62,16 @@ function ListScreen({ onNewItem }) {
 export default ListScreen;
 
 const styles = StyleSheet.create({
-    flatlistContainer:{
-        flex:1,
-    },
-    rootContainer:{
-        flex: 1,
-    },
-    button:{
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-        margin: 4,
-        padding:4
-    }
+  flatlistContainer: {
+    flex: 1,
+  },
+  rootContainer: {
+    flex: 1,
+  },
+  button: {
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    margin: 4,
+    padding: 4,
+  },
 });
