@@ -9,7 +9,7 @@ function IconButton({onPress}) {
         android_ripple={{ color: Colors.primary200 }}
         style={({ pressed }) =>
           pressed
-            ? [styles.buttonInnerContainer, styles.pressed]
+            ? [styles.pressed,styles.buttonInnerContainer]
             : styles.buttonInnerContainer
         }
         onPress={onPress}
@@ -37,13 +37,14 @@ const styles = StyleSheet.create({
     elevation: 2,
     paddingHorizontal: 14,
     marginVertical: 8,
-    borderRadius: 6,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
     borderRadius: 25,
     width: 50,
     height: 50,
+    overflow: Platform.OS === "android" ? "hidden" : "visible",
+    
   },
   pressed: {
     opacity: 0.5,
@@ -51,6 +52,5 @@ const styles = StyleSheet.create({
   iconContainer:{
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: Platform.OS === "android" ? "hidden" : "visible",
   }
 });

@@ -22,10 +22,10 @@ function RegisterScreen({ onNewPacient }) {
     if (type == "set") {
       const currentDate = selectedDate;
       setDate(currentDate);
-        if(Platform.OS === 'android'){
-            toggleDatepicker();
-            setEnteredDate(currentDate.toDateString());
-        }
+      if (Platform.OS === "android") {
+        toggleDatepicker();
+        setEnteredDate(currentDate.toDateString());
+      }
     } else {
       toggleDatepicker();
     }
@@ -48,37 +48,74 @@ function RegisterScreen({ onNewPacient }) {
             onChange={onChangeDate}
           />
         )}
-        
-            <Pressable onPress={toggleDatepicker}>
-            <UserInputField
-              maxLength={100}
-              onChangeText={changeDateHandler}
-              enteredText={enteredDate}
-              autoCapitalize={"none"}
-              autoCorrect={false}
-              placeHolder={"Ingresa la fecha"}
-              secureTextEntry={false}
-              editable={false}
-            >
-              Fecha
-            </UserInputField>
-          </Pressable>
-        
+
+        <Pressable onPress={toggleDatepicker}>
+          <UserInputField
+            maxLength={100}
+            onChangeText={changeDateHandler}
+            enteredText={enteredDate}
+            autoCapitalize={"none"}
+            autoCorrect={false}
+            placeHolder={"Ingresa la fecha"}
+            secureTextEntry={false}
+            editable={false}
+          >
+            Fecha
+          </UserInputField>
+        </Pressable>
+
         <UserInputField
-        maxLength={100}
-        onChangeText={changePacientHandler}
-        enteredText={enteredPacient}
-        autoCapitalize={'words'}
-        autoCorrect={true}
-        placeHolder={"Nombre del pasiente"}
-        secureTextEntry={false}
-        textContentType={"name"}
-        keyboardType={"default"}
+          maxLength={100}
+          onChangeText={changePacientHandler}
+          enteredText={enteredPacient}
+          autoCapitalize={"words"}
+          autoCorrect={true}
+          placeHolder={"Nombre del Pasiente"}
+          secureTextEntry={false}
+          textContentType={"name"}
+          keyboardType={"default"}
         >
-            Paciente</UserInputField>
-        <UserInputField>Doctor</UserInputField>
-        <UserInputField>Teléfono</UserInputField>
-        <UserInputField>Malestar/Síntomas</UserInputField>
+          Paciente
+        </UserInputField>
+        <UserInputField
+          maxLength={100}
+          onChangeText={changeDoctorHandler}
+          enteredText={enteredDoctor}
+          autoCapitalize={"words"}
+          autoCorrect={true}
+          placeHolder={"Nombre del Doctor"}
+          secureTextEntry={false}
+          textContentType={"name"}
+          keyboardType={"default"}
+        >
+          Doctor
+        </UserInputField>
+        <UserInputField
+          maxLength={100}
+          onChangeText={changePacientHandler}
+          enteredText={enteredPacient}
+          autoCapitalize={"none"}
+          autoCorrect={false}
+          placeHolder={"Nombre del pasiente"}
+          secureTextEntry={false}
+          textContentType={"telephoneNumber"}
+          keyboardType={"number-pad"}
+        >
+          Teléfono
+        </UserInputField>
+        <UserInputField
+          maxLength={100}
+          onChangeText={changeSymHandler}
+          enteredText={enteredSym}
+          autoCapitalize={"sentences"}
+          autoCorrect={true}
+          placeHolder={"Describa el malestar presentado"}
+          secureTextEntry={false}
+          textContentType={"name"}
+          keyboardType={"none"}
+        >
+          Malestar/Síntomas
+        </UserInputField>
       </View>
 
       <PrimaryButton onPress={cameraHandler}>Capturar receta</PrimaryButton>
