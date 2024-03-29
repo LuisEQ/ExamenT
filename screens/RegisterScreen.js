@@ -5,6 +5,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import PrimaryButton from "../components/ui/buttons/PrimaryButton";
 import Title from "../components/ui/Title";
 import UserInputField from "../components/ui/UserInputField";
+import Register from "../models/register";
+import { RegisterData } from "../dummyinfo/dummy";
 
 function RegisterScreen({ onNewPacient }) {
   const [date, setDate] = useState(new Date());
@@ -44,6 +46,35 @@ function RegisterScreen({ onNewPacient }) {
     setEnteredSym(enteredData);
   }
   function cameraHandler() {}
+
+  function newPacientHandler() {
+    if (
+      enteredPacient !== undefined ||
+      enteredDoctor !== undefined ||
+      enteredSym !== undefined ||
+      enteredPhone !== undefined
+    ) {
+      if (
+        enteredPacient.length !== 0 ||
+        enteredDoctor.length !== 0 ||
+        enteredSym.length !== 0 ||
+        enteredPhone.length !== 0
+      ) {
+        RegisterData.push(
+          new Register(
+            Math.floor(Math.random() * 10000),
+            enteredDate,
+            enteredPacient,
+            enteredDoctor,
+            enteredPhone,
+            enteredSym,
+            ""
+          )
+        );
+        onNewPacient();
+      }
+    }
+  }
   return (
     <View>
       <Title>Registro</Title>
@@ -128,7 +159,7 @@ function RegisterScreen({ onNewPacient }) {
       </View>
 
       <PrimaryButton onPress={cameraHandler}>Capturar receta</PrimaryButton>
-      <PrimaryButton onPress={onNewPacient}>Guardar</PrimaryButton>
+      <PrimaryButton onPress={newPacientHandler}>Guardar</PrimaryButton>
     </View>
   );
 }
