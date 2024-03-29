@@ -12,7 +12,7 @@ function PacientItem({ pacient, sym, doctor, phone }) {
       </View>
       <View style={styles.infoContainer}>
         <Text>Paciente: {pacient}</Text>
-        <Text>Malestar: {sym}</Text>
+        <Text style={{width: '40%'}}>Malestar: {sym}</Text>
         <Text>Doctor: {doctor}</Text>
         <Text>Tél: {phone}</Text>
       </View>
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     margin: 12,
     borderBottomWidth: 2,
     borderColor: "#ccc",
+    width: '80%',
   },
   imageContainer: {
     justifyContent: "center",

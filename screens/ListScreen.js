@@ -19,7 +19,7 @@ function ListScreen({ onNewItem }) {
     return (
       <PacientItem
         pacient={itemData.item.pacient}
-        sym={itemData.item.symtoms}
+        sym={itemData.item.symptoms}
         doctor={itemData.item.doctor}
         phone={itemData.item.phone}
       />
