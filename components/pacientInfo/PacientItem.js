@@ -1,18 +1,17 @@
 import { View, Text, StyleSheet, Image } from "react-native";
-function PacientItem({ pacient, sym, doctor, phone }) {
+function PacientItem({ pacient, sym, doctor, phone, image }) {
   return (
     <View style={styles.rootContainer}>
       <View style={styles.imageContainer}>
         <Image
-          source={require("../../assets/images/no-image-icon-6.png")}
-          defaultSource={require("../../assets/images/no-image-icon-6.png")}
+          source={{uri: image}}
           alt={pacient}
           style={styles.image}
         />
       </View>
       <View style={styles.infoContainer}>
         <Text>Paciente: {pacient}</Text>
-        <Text style={{width: '40%'}}>Malestar: {sym}</Text>
+        <Text >Malestar: {sym}</Text>
         <Text>Doctor: {doctor}</Text>
         <Text>Tél: {phone}</Text>
       </View>

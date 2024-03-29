@@ -34,6 +34,7 @@ function ListScreen({ onNewItem }) {
         sym={itemData.item.symptoms}
         doctor={itemData.item.doctor}
         phone={itemData.item.phone}
+        image={itemData.item.image}
       />
     );
   }
@@ -64,6 +65,8 @@ const styles = StyleSheet.create({
   },
   rootContainer: {
     flex: 1,
+    margin: 12,
+    marginTop: 32,
   },
   button: {
     justifyContent: "flex-end",

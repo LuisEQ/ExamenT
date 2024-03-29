@@ -2,13 +2,8 @@ import { useState } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-function SearchBar({onChanged}) {
-  const [searchBarText, setSearchBarText] = useState("");
-
-  function searchBarHandler(text) {
-    setSearchBarText(text);
-    onChanged(searchBarText);
-  }
+function SearchBar({searchBarText,onChanged}) {
+  
   return (
     <View style={styles.searchSection}>
         <View style={styles.iconContainer}>
@@ -21,7 +16,7 @@ function SearchBar({onChanged}) {
           maxLength={150}
           autoCapitalize={"none"}
           autoCorrect={true}
-          onChangeText={searchBarHandler}
+          onChangeText={onChanged}
           value={searchBarText}
           placeholder={"Buscar"}
           secureTextEntry={false}

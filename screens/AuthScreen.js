@@ -95,7 +95,7 @@ export default AuthScreen;
 
 const styles = StyleSheet.create({
   titleContainer: {
-    marginTop: 12,
-    margin: 8,
+    margin: 12,
+    marginTop: 32,
   },
 });

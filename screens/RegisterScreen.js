@@ -1,5 +1,12 @@
-import { useState } from "react";
-import { StyleSheet, View, Image, Pressable, Platform } from "react-native";
+import { useState, useEffect, useRef } from "react";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Pressable,
+  Platform,
+  Text,
+} from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import PrimaryButton from "../components/ui/buttons/PrimaryButton";
@@ -8,7 +15,7 @@ import UserInputField from "../components/ui/UserInputField";
 import Register from "../models/register";
 import { RegisterData } from "../dummyinfo/dummy";
 
-function RegisterScreen({ onNewPacient }) {
+function RegisterScreen({ onNewPacient, onNewCamera, imageTaken }) {
   const [date, setDate] = useState(new Date());
   const [enteredDate, setEnteredDate] = useState();
   const [showPicker, setShowPicker] = useState(false);
@@ -16,7 +23,11 @@ function RegisterScreen({ onNewPacient }) {
   const [enteredDoctor, setEnteredDoctor] = useState();
   const [enteredPhone, setEnteredPhone] = useState();
   const [enteredSym, setEnteredSym] = useState();
-
+  
+  const enteredPhoto = imageTaken;
+  if(enteredPhoto === null || enteredPhoto === undefined){
+    console.log('No hay foto')
+  }
   const toggleDatepicker = () => {
     setShowPicker(!showPicker);
   };
@@ -45,7 +56,9 @@ function RegisterScreen({ onNewPacient }) {
   function changeSymHandler(enteredData) {
     setEnteredSym(enteredData);
   }
-  function cameraHandler() {}
+  function cameraHandler() {
+    onNewCamera();
+  }
 
   function newPacientHandler() {
     if (
@@ -68,7 +81,7 @@ function RegisterScreen({ onNewPacient }) {
             enteredDoctor,
             enteredPhone,
             enteredSym,
-            ""
+            enteredPhoto
           )
         );
         onNewPacient();
@@ -76,7 +89,7 @@ function RegisterScreen({ onNewPacient }) {
     }
   }
   return (
-    <View>
+    <View style={styles.container}>
       <Title>Registro</Title>
       <View>
         {showPicker && (
@@ -159,6 +172,7 @@ function RegisterScreen({ onNewPacient }) {
       </View>
 
       <PrimaryButton onPress={cameraHandler}>Capturar receta</PrimaryButton>
+            <Image source={{uri: enteredPhoto}} style={styles.image}/>
       <PrimaryButton onPress={newPacientHandler}>Guardar</PrimaryButton>
     </View>
   );
@@ -166,4 +180,14 @@ function RegisterScreen({ onNewPacient }) {
 
 export default RegisterScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    margin: 12,
+    marginTop: 32,
+  },
+  image:{
+    
+    height: 200,
+    width: 200,
+  }
+});
