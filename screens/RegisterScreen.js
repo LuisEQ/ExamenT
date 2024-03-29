@@ -30,11 +30,19 @@ function RegisterScreen({ onNewPacient }) {
       toggleDatepicker();
     }
   };
-  function changeDateHandler() {}
-  function changePacientHandler() {}
-  function changeDoctorHandler() {}
-  function changePhoneHandler() {}
-  function changeSymHandler() {}
+  function changeDateHandler(enteredData) {}
+  function changePacientHandler(enteredData) {
+    setEnteredPacient(enteredData);
+  }
+  function changeDoctorHandler(enteredData) {
+    setEnteredDoctor(enteredData);
+  }
+  function changePhoneHandler(enteredData) {
+    setEnteredPhone(enteredData);
+  }
+  function changeSymHandler(enteredData) {
+    setEnteredSym(enteredData);
+  }
   function cameraHandler() {}
   return (
     <View>
@@ -51,7 +59,7 @@ function RegisterScreen({ onNewPacient }) {
 
         <Pressable onPress={toggleDatepicker}>
           <UserInputField
-            keyboardType={'default'}
+            keyboardType={"default"}
             maxLength={100}
             onChangeText={changeDateHandler}
             enteredText={enteredDate}
@@ -93,8 +101,8 @@ function RegisterScreen({ onNewPacient }) {
         </UserInputField>
         <UserInputField
           maxLength={10}
-          onChangeText={changePacientHandler}
-          enteredText={enteredPacient}
+          onChangeText={changePhoneHandler}
+          enteredText={enteredPhone}
           autoCapitalize={"none"}
           autoCorrect={false}
           placeHolder={"Teléfono del doctor"}
