@@ -18,9 +18,9 @@ function AuthScreen({ onValid }) {
   function onValidAuth() {
     if (validateEmail(emailEntered)) {
       {
+        console.log("Valid email");
         onValid();
       }
-      console.log("Valid email");
     } else {
       console.log("Invalid Email");
     }
